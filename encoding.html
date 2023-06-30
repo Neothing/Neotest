@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>encodeURI vs encodeURIComponent</title>
+    <style>
+      html {
+        font-size: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      }
+      button {
+        border: none;
+        background-color: cornflowerblue;
+        color: white;
+        font-weight: 100;
+        font-size: 1.5rem;
+        padding: 0.5rem 2rem;
+      }
+      label {
+        display: block;
+        padding: 1rem 1rem 0.5rem 1rem;
+      }
+      textarea {
+        border: 1px solid #ccc;
+        width: 80%;
+        height: 6rem;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        line-height: 1.5;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Comparing encodeURI() to encodeURIComponent()</h1>
+    </header>
+    <div>
+      <textarea
+        id="start"
+        placeholder="Put text here to encode or decode"
+      ></textarea>
+    </div>
+    <div>
+      <label for="encoded">encodeURI() / decodeURI()</label>
+      <textarea id="encoded" placeholder="encodeURI( ) results"></textarea>
+    </div>
+    <div>
+      <label for="encodedComp"
+        >encodeURIComponent() / decodeURIComponent()</label
+      >
+      <textarea
+        id="encodedComp"
+        placeholder="encodeURIComponent( ) results"
+      ></textarea>
+    </div>
+    <div>
+      <button id="btnEncode">Encode</button>
+      <button id="btnDecode">Decode</button>
+    </div>
+    <div>
+      <a href="" id="lnk">Link</a>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        document
+          .getElementById("btnEncode")
+          .addEventListener("click", doEncode);
+        document
+          .getElementById("btnDecode")
+          .addEventListener("click", doDecode);
+      });
+      function doEncode() {
+        let txt = document.getElementById("start").value;
+        let areaEncoded = document.getElementById("encoded");
+        let areaEncodedComp = document.getElementById("encodedComp");
+        areaEncoded.value = encodeURI(txt);
+        areaEncodedComp.value = encodeURIComponent(txt);
+
+        let lnk = document.getElementById("lnk");
+        lnk.href = encodeURI(txt);
+      }
+      function doDecode() {
+        let txt = document.getElementById("start").value;
+        let areaEncoded = document.getElementById("encoded");
+        let areaEncodedComp = document.getElementById("encodedComp");
+        areaEncoded.value = decodeURI(txt);
+        areaEncodedComp.value = decodeURIComponent(txt);
+      }
+      /**
+      encodeURIComponent - encodes all characters except:
+        A-Z a-z 0-9 - _ . ! ~ * ' ( )
+      Encode everything. When you want to send some data that is encoded. 
+      Useful for Base-64 data A-Z a-z 0-9 + /
+
+      encodeURI - encodes  all characters except the previous list AND
+        ; , / ? : @ & = + $ #
+      Keeps the URL as a usable URL.
+
+      Sample text
+      http://user@pass:www.example.com:5000/path/file?name=value&name2=value2#someId
+
+😀 😁 😂 🤣 😃 😄 😅
+      **/
+    </script>
+  </body>
+</html>
